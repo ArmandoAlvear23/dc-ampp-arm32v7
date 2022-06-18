@@ -1,0 +1,46 @@
+version: '3.9'
+
+services:
+  apache-php8:
+    image: arm32v7/php:8.0.20-apache-bullseye
+    container_name: apache-php8
+    ports:
+      - 8080:80
+    volumes:
+      - ~/docker_volume/apache/var/www/html:/var/www/html/
+    restart: always
+    stdin_open: true
+    tty: true
+      
+  mariadb:
+    image: lscr.io/linuxserver/mariadb:latest
+    container_name: mariadb
+    ports:
+      - 6033:3306
+    volumes:
+      - ~/docker_volume/mariadb:/var/lib/mysql
+    environment:
+      TZ: America/Chicago
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+    restart: always
+    depends_on:
+      - apache-php8
+
+  phpmyadmin:
+    image: lscr.io/linuxserver/phpmyadmin:latest
+    container_name: phpmyadmin
+    ports:
+      - 8081:80
+    links:
+      - mariadb
+    environment:
+      PMA_HOST: mariadb
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+    restart: always
+    depends_on:
+      - apache-php8
+      - mariadb
