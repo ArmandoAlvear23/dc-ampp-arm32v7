@@ -2,7 +2,9 @@ version: '3.9'
 
 services:
   apache-php8:
-    image: arm32v7/php:8.0.20-apache-bullseye
+    build:
+      context: .
+      target: apache-php8
     container_name: apache-php8
     ports:
       - 8080:80
