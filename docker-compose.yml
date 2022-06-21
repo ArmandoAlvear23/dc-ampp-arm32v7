@@ -9,7 +9,9 @@ services:
     ports:
       - 8080:80
     volumes:
-      - ~/docker_volume/apache/var/www/html:/var/www/html/
+      - ~/docker_volume/apache/var:/var
+      - ~/docker_volume/apache/var/www:/var/www
+      - ~/docker_volume/apache/var/www/html:/var/www/html
     restart: always
     stdin_open: true
     tty: true
