@@ -9,9 +9,9 @@ services:
     ports:
       - 8080:80
     volumes:
-      - ~/docker_volume/apache/var:/var
-      - ~/docker_volume/apache/var/www:/var/www
-      - ~/docker_volume/apache/var/www/html:/var/www/html
+      - ~/docker_volumes/apache/var:/var
+      - ~/docker_volumes/apache/var/www:/var/www
+      - ~/docker_volumes/apache/var/www/html:/var/www/html
     restart: always
     stdin_open: true
     tty: true
@@ -22,7 +22,7 @@ services:
     ports:
       - 6033:3306
     volumes:
-      - ~/docker_volume/mariadb:/var/lib/mysql
+      - ~/docker_volumes/mariadb:/var/lib/mysql
     environment:
       TZ: America/Chicago
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
